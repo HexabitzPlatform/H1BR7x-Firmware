@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * File Name          : H26R0_uart.c
+  * File Name          : H1BR7_uart.c
   * Description        : This file provides code for the configuration
   *                      of the USART instances.
   ******************************************************************************
@@ -189,7 +189,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   GPIO_InitTypeDef GPIO_InitStruct;
   if(huart->Instance==USART1)
   {
-	#ifdef _Usart1
+#ifdef _Usart1
     /* Peripheral clock enable */
     __USART1_CLK_ENABLE();
   
@@ -211,11 +211,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     /* Peripheral interrupt init*/
     HAL_NVIC_SetPriority(USART1_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
-	#endif
+#endif
   }
+#ifdef _Usart2
   else if(huart->Instance==USART2)
   {
-	#ifdef _Usart2
     /* Peripheral clock enable */
     __USART2_CLK_ENABLE();
   
@@ -236,12 +236,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     /* Peripheral interrupt init*/
     HAL_NVIC_SetPriority(USART2_IRQn, 1, 0);
-    HAL_NVIC_EnableIRQ(USART2_IRQn);
-	#endif
+    HAL_NVIC_EnableIRQ(USART2_IRQn);	
   }
+#endif
+#ifdef _Usart3
   else if(huart->Instance==USART3)
-  {
-	#ifdef _Usart3
+  {	
     /* Peripheral clock enable */
     __USART3_CLK_ENABLE();
   
@@ -261,13 +261,13 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_GPIO_Init(USART3_RX_PORT, &GPIO_InitStruct);
 
     /* Peripheral interrupt init*/
-    HAL_NVIC_SetPriority(USART3_8_IRQn, 1, 0);
-    HAL_NVIC_EnableIRQ(USART3_8_IRQn);
-	#endif
+    HAL_NVIC_SetPriority(USART3_4_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(USART3_4_IRQn);	
   }
+#endif
+#ifdef _Usart4
   else if(huart->Instance==USART4)
-  {
-	#ifdef _Usart4
+  {	
     /* Peripheral clock enable */
     __USART4_CLK_ENABLE();
   
@@ -287,13 +287,13 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_GPIO_Init(USART4_RX_PORT, &GPIO_InitStruct);
 
     /* Peripheral interrupt init*/
-    HAL_NVIC_SetPriority(USART3_8_IRQn, 1, 0);
-    HAL_NVIC_EnableIRQ(USART3_8_IRQn);
-	#endif
+    HAL_NVIC_SetPriority(USART3_4_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(USART3_4_IRQn);	
   }
+#endif
+#ifdef _Usart5
   else if(huart->Instance==USART5)
   {
-	#ifdef _Usart5
     /* Peripheral clock enable */
     __USART5_CLK_ENABLE();
   
@@ -314,12 +314,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     /* Peripheral interrupt init*/
     HAL_NVIC_SetPriority(USART3_8_IRQn, 1, 0);
-    HAL_NVIC_EnableIRQ(USART3_8_IRQn);
-	#endif
+    HAL_NVIC_EnableIRQ(USART3_8_IRQn);	
   }
+#endif
+#ifdef _Usart6
   else if(huart->Instance==USART6)
   {
-	#ifdef _Usart6
     /* Peripheral clock enable */
     __USART6_CLK_ENABLE();
   
@@ -341,8 +341,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     /* Peripheral interrupt init*/
     HAL_NVIC_SetPriority(USART3_8_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(USART3_8_IRQn);
-	#endif
   }
+#endif
 }
 
 /* --- Blocking (polling-based) read protected with a semaphore --- 

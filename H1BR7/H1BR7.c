@@ -2,15 +2,19 @@
     BitzOS (BOS) V0.1.5 - Copyright (C) 2017-2018 Hexabitz
     All rights reserved
 
-    File Name     : H26R0.c
-    Description   : Source code for module H26R0.
-										Load cell (strain gauge) Whatstone bridge sensor (HX711)
+    File Name     : H1BR7.c
+    Description   : Source code for module H1BR7.
+										USB Mass Storage Device (MSD)
 		
 		Required MCU resources : 
 		
-			>> USARTs 2,3,4,5,6 for module ports.
-			>> I2C1 for HX711 digital interface.
-			>> PA6 for HX711 RATE control.
+			>> USARTs 1,2,3,4 for module ports.
+			>> DMA Ch3 for port-to-memory messaging.
+			>> DMA Ch5, Ch6 for port-to-port streaming.
+			>> USBD for USB-C connection.
+			>> SPI1 for uSD.
+			>> PB2 for uSD detect.
+			>> PB7 for USB VBUS sense.
 			
 */
 	
@@ -48,14 +52,12 @@ UART_HandleTypeDef huart6;
 void Module_Init(void)
 {
 	/* Array ports */
+  MX_USART1_UART_Init();
+  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
-  MX_USART5_UART_Init();
-  MX_USART6_UART_Init();
 	
-	/* HX711 */
-  // I2C init
-	// RATE init
+
 	
 }
 /*-----------------------------------------------------------*/
@@ -64,13 +66,13 @@ void Module_Init(void)
 */
 Module_Status Module_MessagingTask(uint16_t code, uint8_t port, uint8_t src, uint8_t dst)
 {
-	Module_Status result = H26R0_OK;
+	Module_Status result = H1BR7_OK;
 	
 	switch (code)
 	{
 
 		default:
-			result = H26R0_ERR_UnknownMessage;
+			result = H1BR7_ERR_UnknownMessage;
 			break;
 	}			
 
@@ -96,12 +98,10 @@ uint8_t GetPort(UART_HandleTypeDef *huart)
 			return P1;
 	else if (huart->Instance == USART2)
 			return P2;
-	else if (huart->Instance == USART6)
-			return P3;
 	else if (huart->Instance == USART3)
+			return P3;
+	else if (huart->Instance == USART1)
 			return P4;
-	else if (huart->Instance == USART5)
-			return P5;
 		
 	return 0;
 }

@@ -2,52 +2,55 @@
     BitzOS (BOS) V0.1.5 - Copyright (C) 2017-2018 Hexabitz
     All rights reserved
 		
-    File Name     : H26R0.h
-    Description   : Header file for module H26R0.
-										Load cell (strain gauge) Whatstone bridge sensor (HX711)
+    File Name     : H1BR7.h
+    Description   : Header file for module H1BR7.
+										USB Mass Storage Device (MSD)
 */
 	
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef H26R0_H
-#define H26R0_H
+#ifndef H1BR7_H
+#define H1BR7_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "BOS.h"
-#include "H26R0_uart.h"	
-#include "H26R0_gpio.h"	
-#include "H26R0_dma.h"	
+#include "H1BR7_uart.h"	
+#include "H1BR7_gpio.h"	
+#include "H1BR7_dma.h"	
 	
 	
 /* Exported definitions -------------------------------------------------------*/
 
-#define	modulePN		_H26R0
+#define	modulePN		_H1BR7
 
 /* Port-related definitions */
-#define	NumOfPorts		5
+#define	NumOfPorts		4
 #define P_PROG 				P2						/* ST factory bootloader UART */
 
 /* Define available ports */
 #define _P1 
 #define _P2 
 #define _P3
-#define _P4 
-#define _P5  
+#define _P4   
 
 /* Define available USARTs */
+#define _Usart1 1
 #define _Usart2 1
 #define _Usart3 1
 #define _Usart4 1
-#define _Usart5 1
-#define _Usart6	1
 
 /* Port-UART mapping */
 #define P1uart 			&huart4
-#define P2uart 			&huart2	
-#define P3uart 			&huart6
-#define P4uart 			&huart3
-#define P5uart 			&huart5	
+#define P2uart 			&huart2
+#define P3uart 			&huart3
+#define P4uart 			&huart1
 
 /* Port Definitions */
+#define	USART1_TX_PIN		GPIO_PIN_9
+#define	USART1_RX_PIN		GPIO_PIN_10
+#define	USART1_TX_PORT	GPIOA
+#define	USART1_RX_PORT	GPIOA
+#define	USART1_AF				GPIO_AF1_USART1
+
 #define	USART2_TX_PIN		GPIO_PIN_2
 #define	USART2_RX_PIN		GPIO_PIN_3
 #define	USART2_TX_PORT	GPIOA
@@ -66,32 +69,20 @@
 #define	USART4_RX_PORT	GPIOA
 #define	USART4_AF				GPIO_AF4_USART4
 
-#define	USART5_TX_PIN		GPIO_PIN_3
-#define	USART5_RX_PIN		GPIO_PIN_4
-#define	USART5_TX_PORT	GPIOB
-#define	USART5_RX_PORT	GPIOB
-#define	USART5_AF				GPIO_AF4_USART5
-
-#define	USART6_TX_PIN		GPIO_PIN_4
-#define	USART6_RX_PIN		GPIO_PIN_5
-#define	USART6_TX_PORT	GPIOA
-#define	USART6_RX_PORT	GPIOA
-#define	USART6_AF				GPIO_AF5_USART6
-
 /* Module-specific Definitions */
 
 
 /* H01R0_Status Type Definition */  
 typedef enum 
 {
-  H26R0_OK = 0,
-	H26R0_ERR_UnknownMessage = 1,
-	H26R0_ERROR = 255
+  H1BR7_OK = 0,
+	H1BR7_ERR_UnknownMessage = 1,
+	H1BR7_ERROR = 255
 } Module_Status;
 
 /* Indicator LED */
-#define _IND_LED_PORT		GPIOA
-#define _IND_LED_PIN		GPIO_PIN_11
+#define _IND_LED_PORT		GPIOB
+#define _IND_LED_PIN		GPIO_PIN_14
 
 
 /* Export UART variables */
@@ -99,15 +90,13 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart4;
-extern UART_HandleTypeDef huart5;
-extern UART_HandleTypeDef huart6;
+
 
 /* Define UART Init prototypes */
+extern void MX_USART1_UART_Init(void);
 extern void MX_USART2_UART_Init(void);
 extern void MX_USART3_UART_Init(void);
 extern void MX_USART4_UART_Init(void);
-extern void MX_USART5_UART_Init(void);
-extern void MX_USART6_UART_Init(void);
 
 
 
@@ -134,6 +123,6 @@ extern void MX_USART6_UART_Init(void);
 
 
 
-#endif /* H26R0_H */
+#endif /* H1BR7_H */
 
 /************************ (C) COPYRIGHT HEXABITZ *****END OF FILE****/

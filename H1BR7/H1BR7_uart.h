@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * File Name          : H26R0_uart.h
+  * File Name          : H1BR7_uart.h
   * Description        : This file provides code for the configuration
   *                      of the USART instances.
   ******************************************************************************

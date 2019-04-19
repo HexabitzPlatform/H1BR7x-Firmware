@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    H26R0_it.c
+  * @file    H1BR7_it.c
   * @brief   Interrupt Service Routines.
   ******************************************************************************
   *
@@ -151,13 +151,7 @@ void USART3_8_IRQHandler(void)
 */
 void DMA1_Ch1_IRQHandler(void)
 {
-	/* Streaming DMA 1 */
-	HAL_DMA_IRQHandler(&portPortDMA1);
-	if (DMAStream1total)
-		++DMAStream1count;
-	if (DMAStream1count >= DMAStream1total) {
-		StopPortPortDMA1();
-	}
+
 	
 }
 
@@ -168,18 +162,7 @@ void DMA1_Ch1_IRQHandler(void)
 */
 void DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler(void)
 {
-	/* Messaging DMA 3 */
-	if (HAL_DMA_GET_IT_SOURCE(DMA2,DMA_ISR_TCIF2) == SET) {
-		HAL_DMA_IRQHandler(&portMemDMA3);
-	/* Streaming DMA 2 */
-	} else if (HAL_DMA_GET_IT_SOURCE(DMA1,DMA_ISR_TCIF3) == SET) {
-		HAL_DMA_IRQHandler(&portPortDMA2);
-		if (DMAStream2total)
-			++DMAStream2count;
-		if (DMAStream2count >= DMAStream2total) {
-			StopPortPortDMA2();
-		}
-	}
+
 }
 
 /*-----------------------------------------------------------*/
@@ -189,21 +172,7 @@ void DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler(void)
 */
 void DMA1_Ch4_7_DMA2_Ch3_5_IRQHandler(void)
 {
-	/* Messaging DMA 1 */
-	if (HAL_DMA_GET_IT_SOURCE(DMA1,DMA_ISR_TCIF5) == SET) {
-		HAL_DMA_IRQHandler(&portMemDMA1);
-	/* Messaging DMA 2 */
-	} else if (HAL_DMA_GET_IT_SOURCE(DMA1,DMA_ISR_TCIF6) == SET) {
-		HAL_DMA_IRQHandler(&portMemDMA2);
-	/* Streaming DMA 3 */
-	} else if (HAL_DMA_GET_IT_SOURCE(DMA2,DMA_ISR_TCIF3) == SET) {
-		HAL_DMA_IRQHandler(&portPortDMA3);
-		if (DMAStream3total)
-			++DMAStream3count;
-		if (DMAStream3count >= DMAStream3total) {
-			StopPortPortDMA3();
-		}
-	}
+
 }
 
 /*-----------------------------------------------------------*/

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * File Name          : H26R0_gpio.h
+  * File Name          : H1BR7_gpio.h
   * Description        : This file contains all the functions prototypes for 
   *                      the gpio  
   ******************************************************************************

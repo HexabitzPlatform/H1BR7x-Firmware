@@ -1,9 +1,7 @@
-;******************** (C) COPYRIGHT 2015 STMicroelectronics ********************
-;* File Name          : startup_stm32f091xc.s
+;******************** (C) COPYRIGHT 2016 STMicroelectronics ********************
+;* File Name          : startup_stm32f072xb.s
 ;* Author             : MCD Application Team
-;* Version            : V2.2.2
-;* Date               : 26-June-2015
-;* Description        : STM32F091xc/STM32F098xc devices vector table for MDK-ARM toolchain.
+;* Description        : STM32F072x8/STM32F072xB devices vector table for MDK-ARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
 ;*                      - Set the initial PC == Reset_Handler
@@ -14,7 +12,7 @@
 ;*                      priority is Privileged, and the Stack is set to Main.
 ;* <<< Use Configuration Wizard in Context Menu >>>
 ;*******************************************************************************
-;
+;*
 ;* Redistribution and use in source and binary forms, with or without modification,
 ;* are permitted provided that the following conditions are met:
 ;*   1. Redistributions of source code must retain the above copyright notice,
@@ -37,11 +35,7 @@
 ;* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ;* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ;
-;*******************************************************************************	
-;
-;		MODIFIED by Hexabitz for BitzOS (BOS) V0.1.5 - Copyright (C) 2017-2018 Hexabitz
-;    All rights reserved
-;
+;*******************************************************************************
 
 ; Amount of memory (in bytes) allocated for Stack
 ; Tailor this value to your application needs
@@ -104,9 +98,9 @@ __Vectors       DCD     __initial_sp                   ; Top of Stack
                 DCD     EXTI2_3_IRQHandler             ; EXTI Line 2 and 3
                 DCD     EXTI4_15_IRQHandler            ; EXTI Line 4 to 15
                 DCD     TSC_IRQHandler                 ; TS
-                DCD     DMA1_Ch1_IRQHandler            ; DMA1 Channel 1
-                DCD     DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler ; DMA1 Channel 2 and 3 & DMA2 Channel 1 and 2
-                DCD     DMA1_Ch4_7_DMA2_Ch3_5_IRQHandler ; DMA1 Channel 4 to 7 & DMA2 Channel 3 to 5 
+                DCD     DMA1_Channel1_IRQHandler       ; DMA1 Channel 1
+                DCD     DMA1_Channel2_3_IRQHandler     ; DMA1 Channel 2 and Channel 3
+                DCD     DMA1_Channel4_5_6_7_IRQHandler ; DMA1 Channel 4, Channel 5, Channel 6 and Channel 7
                 DCD     ADC1_COMP_IRQHandler           ; ADC1, COMP1 and COMP2 
                 DCD     TIM1_BRK_UP_TRG_COM_IRQHandler ; TIM1 Break, Update, Trigger and Commutation
                 DCD     TIM1_CC_IRQHandler             ; TIM1 Capture Compare
@@ -124,8 +118,9 @@ __Vectors       DCD     __initial_sp                   ; Top of Stack
                 DCD     SPI2_IRQHandler                ; SPI2
                 DCD     USART1_IRQHandler              ; USART1
                 DCD     USART2_IRQHandler              ; USART2
-                DCD     USART3_8_IRQHandler            ; USART3, USART4, USART5, USART6, USART7, USART8
+                DCD     USART3_4_IRQHandler            ; USART3 & USART4
                 DCD     CEC_CAN_IRQHandler             ; CEC and CAN
+                DCD     USB_IRQHandler                 ; USB
 
 __Vectors_End
 
@@ -140,7 +135,7 @@ Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]
                 IMPORT  __main
 
-                LDR        R0, =0x20007FF0  ; Address for RAM signature (STM32F09x)
+                LDR        R0, =0x20003FF0  ; Address for RAM signature (STM32F07x)
                 LDR        R1, =0xDEADBEEF
                 LDR        R2, [R0, #0] ; Read current
                 STR        R0, [R0, #0] ; Invalidate
@@ -167,8 +162,8 @@ Reboot_Loader   PROC
 ;                LDR     R0, =0x1FFFEC00 ; ROM BASE (STM32F03x)
 ;                LDR     R0, =0x1FFFC400 ; ROM BASE (STM32F04x)
 ;                LDR     R0, =0x1FFFEC00 ; ROM BASE (STM32F05x)
-;                LDR     R0, =0x1FFFC800 ; ROM BASE (STM32F07x)
-                LDR     R0, =0x1FFFD800 ; ROM BASE (STM32F09x)
+                LDR     R0, =0x1FFFC800 ; ROM BASE (STM32F07x)
+;                LDR     R0, =0x1FFFD800 ; ROM BASE (STM32F09x)
                 LDR     R1, [R0, #0]    ; SP @ +0
                 MOV     SP, R1
                 LDR     R0, [R0, #4]    ; PC @ +4
@@ -181,7 +176,7 @@ Reboot_Loader   PROC
 NMI_Handler     PROC
                 EXPORT  NMI_Handler                    [WEAK]
                 B       .
-                ENDP				
+                ENDP
 HardFault_Handler\
                 PROC
                 EXPORT  HardFault_Handler              [WEAK]
@@ -211,9 +206,9 @@ Default_Handler PROC
                 EXPORT  EXTI2_3_IRQHandler             [WEAK]
                 EXPORT  EXTI4_15_IRQHandler            [WEAK]
                 EXPORT  TSC_IRQHandler                 [WEAK]
-                EXPORT  DMA1_Ch1_IRQHandler            [WEAK]
-                EXPORT  DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler [WEAK]
-                EXPORT  DMA1_Ch4_7_DMA2_Ch3_5_IRQHandler [WEAK]
+                EXPORT  DMA1_Channel1_IRQHandler       [WEAK]
+                EXPORT  DMA1_Channel2_3_IRQHandler     [WEAK]
+                EXPORT  DMA1_Channel4_5_6_7_IRQHandler [WEAK]
                 EXPORT  ADC1_COMP_IRQHandler           [WEAK]
                 EXPORT  TIM1_BRK_UP_TRG_COM_IRQHandler [WEAK]
                 EXPORT  TIM1_CC_IRQHandler             [WEAK]
@@ -231,8 +226,9 @@ Default_Handler PROC
                 EXPORT  SPI2_IRQHandler                [WEAK]
                 EXPORT  USART1_IRQHandler              [WEAK]
                 EXPORT  USART2_IRQHandler              [WEAK]
-                EXPORT  USART3_8_IRQHandler            [WEAK]
+                EXPORT  USART3_4_IRQHandler            [WEAK]
                 EXPORT  CEC_CAN_IRQHandler             [WEAK]
+                EXPORT  USB_IRQHandler                 [WEAK]
 
 
 WWDG_IRQHandler
@@ -244,9 +240,9 @@ EXTI0_1_IRQHandler
 EXTI2_3_IRQHandler
 EXTI4_15_IRQHandler
 TSC_IRQHandler
-DMA1_Ch1_IRQHandler
-DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler
-DMA1_Ch4_7_DMA2_Ch3_5_IRQHandler
+DMA1_Channel1_IRQHandler
+DMA1_Channel2_3_IRQHandler
+DMA1_Channel4_5_6_7_IRQHandler
 ADC1_COMP_IRQHandler
 TIM1_BRK_UP_TRG_COM_IRQHandler
 TIM1_CC_IRQHandler
@@ -264,8 +260,9 @@ SPI1_IRQHandler
 SPI2_IRQHandler
 USART1_IRQHandler
 USART2_IRQHandler
-USART3_8_IRQHandler
+USART3_4_IRQHandler
 CEC_CAN_IRQHandler
+USB_IRQHandler
 
                 B       .
 
